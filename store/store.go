@@ -7,8 +7,19 @@ type Store struct {
 
 // MakeNewStore constructs a new key value store
 func MakeNewStore() *Store {
-	s := &Store{}
+	s := &Store{data: make(map[Key]Value)}
 	return s
+}
+
+// MakeNewStoreWithData constructs a store with some initial data
+func MakeNewStoreWithData(initial map[Key]Value) *Store {
+	s := &Store{data: initial}
+	return s
+}
+
+// GetData returns the underlying hashmap
+func (s Store) GetData() map[Key]Value {
+	return s.data
 }
 
 // Set sets a new key value pair or updates it if the key already exists
@@ -23,6 +34,7 @@ func (s Store) Get(key Key) (Value, bool) {
 }
 
 // Delete will remove the key value mapping associated with the provided key. Returns a status indicating a no-op if false (key mapping does not exist)
+// or true if everything went ok
 func (s *Store) Delete(key Key) bool {
 	// delete is a no-op if there is no such key so we need to manually check if key exists
 	_, ok := s.Get(key)
