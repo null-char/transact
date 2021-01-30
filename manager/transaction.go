@@ -132,7 +132,7 @@ func (tm *TransactionManager) Get(key s.Key) (s.Mappable, bool) {
 func (tm *TransactionManager) Delete(key s.Key) error {
 	s := tm.getActiveStore()
 	if ok := s.Delete(key); !ok {
-		return errors.New("Key does not exist")
+		return errors.New("Not found")
 	}
 
 	return nil
